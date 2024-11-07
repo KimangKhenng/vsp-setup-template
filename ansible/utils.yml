@@ -1,0 +1,19 @@
+---
+- name: Install system utilities
+  hosts: all
+  become: yes # Use sudo to install packages
+  tasks:
+    - name: Update and upgrade all packages to the latest version
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+        cache_valid_time: 3600
+    - name: Install htop and neofetch
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      loop:
+        - htop
+        - neofetch
+        - net-tools
